@@ -5,7 +5,9 @@ Purpose: main file for printing app
 */
 
 import 'package:flutter/material.dart';
+import 'package:print_at_cmu/bloc/app_state.dart';
 import 'package:print_at_cmu/ui/print_page.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +16,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Print@CMU',
-      home: PrintPage(),
+      home: ChangeNotifierProvider<AppState>(
+        builder: (_) => AppState(),
+        child: PrintPage(),
+      ),
     );
   }
 }
