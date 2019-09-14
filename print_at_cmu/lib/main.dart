@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       home: ChangeNotifierProvider<AppState>(
         builder: (_) => AppState(),
         child: Material(
-          child: PrintVerificationPanel()
+          child: PrintPage(),
         ),
       ),
     );
