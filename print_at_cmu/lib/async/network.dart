@@ -10,7 +10,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 class Network{
-  static Future<String> sendFile(String andrewid, int numcopies, String sidedness, File file, String filename) async {
+  static Future<Map> sendFile(String andrewid, int numcopies, String sidedness, File file, String filename) async {
     FormData formData = new FormData.from({
       "andrew_id": andrewid,
       "file": new UploadFileInfo(file, filename),
@@ -20,6 +20,6 @@ class Network{
 
     var dio = Dio();
     final response = await dio.post("https://apis.scottylabs.org/print/v0/printfile", data: formData);
-    return json.decode(response.toString())["message"];
+    return json.decode(response.toString());
   }
 }

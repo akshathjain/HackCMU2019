@@ -14,5 +14,6 @@ class Palette{
 
 
   static Color SL_BLUE = const Color.fromARGB(255, 0, 148, 167);
+  static Color SUCCESS = Color.fromRGBO(14, 211, 161, 1);
 
 }

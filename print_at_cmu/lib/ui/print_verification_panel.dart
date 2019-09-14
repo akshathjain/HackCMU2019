@@ -12,41 +12,59 @@ import 'package:url_launcher/url_launcher.dart';
 class PrintVerificationPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          "Print job successfully sent",
-          style: TextStyle(
-            height: 5,
-            fontSize: 25,
-            fontWeight: FontWeight.bold
-          ),
-          textAlign: TextAlign.center
-        ),
-        _icon(FontAwesomeIcons.checkCircle),
-        SizedBox(height: 20),
-        RaisedButton(
-          onPressed: () => launch('http://www.cmu.edu/computing/services/endpoint/printing-kiosks/locations.html'),
-          textColor: Colors.white,
-          color: Palette.ACCENT_COLOR,
-
-          child: Text(
-            "See all printing locations"
-          )
-        )
-      ],
-      mainAxisAlignment: MainAxisAlignment.start, 
-
-    );
-  }
-  Widget _icon(IconData data){
     return Container(
-      padding: const EdgeInsets.fromLTRB(8,0,14,0),
-      child: Icon(
-        data,
-        color: Colors.green,
-        size: 50.0,
+      margin: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(32)
       ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+
+          Text(
+            "Print Job Successful",
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold
+            ),
+            textAlign: TextAlign.center
+          ),
+
+          SizedBox(height: 60,),
+
+          Container(
+            padding: const EdgeInsets.all(12.0),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Palette.SUCCESS,
+                width: 2.8
+              ),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.check,
+              color: Palette.SUCCESS,
+              size: 28.0,
+            ),
+          ),
+
+
+          SizedBox(height: 60),
+
+
+          RaisedButton(
+            onPressed: () => launch('http://www.cmu.edu/computing/services/endpoint/printing-kiosks/locations.html'),
+            textColor: Colors.white,
+            color: Palette.ACCENT_COLOR,
+            child: Text(
+              "See all Printing Locations"
+            )
+          )
+
+        ],
+      )
     );
   }
+
 }

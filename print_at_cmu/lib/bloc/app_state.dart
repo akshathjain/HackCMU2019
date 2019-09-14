@@ -8,18 +8,24 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:print_at_cmu/assets/strings.dart';
 import 'package:print_at_cmu/async/network.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class AppState with ChangeNotifier{
   String _andrewId;
   int _numberCopies;
-  String _sidedness = "One Sided";
+  String _sidedness = Strings.SIDE_DEFAULT;
   File _file;
+  PanelController _pc;
+
+  AppState(){
+    _pc = new PanelController();
+  }
 
   String get andrewId => _andrewId;
   set andrewId(String s){
     this._andrewId = s;
-    print(_andrewId);
     notifyListeners();
   }
 
@@ -42,27 +48,29 @@ class AppState with ChangeNotifier{
     return strings[strings.length - 1];
   }
 
+  PanelController get panelController => _pc;
+
   void selectFile() async{
     _file = await FilePicker.getFile(type: FileType.ANY);
     notifyListeners();
   }
 
-  void sendToPrinter() async{
-    print(_andrewId);
-    print(_numberCopies);
-    print(_sidedness);
-    print(_file);
+  void sendToPrinter(BuildContext context) async{
     if(_andrewId != null && _numberCopies != null && _sidedness != null && _file != null){
       String side;
 
-      if(sidedness == "Two Sided (landscape)")
+      if(sidedness == Strings.SIDE_TWO_SIDED_LANDSCAPE)
         side = "two-sided-long-edge";
-      else if(sidedness == "Two Sided (portrait)")
+      else if(sidedness == Strings.SIDE_TWO_SIDED_PORTRAIT)
         side = "two-side-short-edge";
       else
         side = "one-sided";
 
-      Network.sendFile(andrewId, numberCopies, side, _file, fileName);
+      Map response = await Network.sendFile(andrewId, numberCopies, side, _file, fileName);
+      print(response);
+      if(response["status_code"] == 200){
+        _pc.open();
+      }
     }
   }
 

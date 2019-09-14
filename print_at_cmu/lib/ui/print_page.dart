@@ -21,14 +21,17 @@ class PrintPage extends StatelessWidget {
     _appState = Provider.of<AppState>(context);
 
     return SlidingUpPanel(
-      body: _body(),
+      body: _body(context),
       panel: PrintVerificationPanel(),
       minHeight: 0,
       maxHeight: MediaQuery.of(context).size.height / 2,
+      controller: _appState.panelController,
+      backdropEnabled: true,
+      renderPanelSheet: false,
     );
   }
 
-  Widget _body(){
+  Widget _body(BuildContext context){
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -89,7 +92,7 @@ class PrintPage extends StatelessWidget {
                 DropdownButton<String>(
                   value: _appState.sidedness,
                   onChanged: (String x) => _appState.sidedness = x,
-                  items: ["One Sided", "Two Sided (portrait)", "Two Sided (landscape)"].map((x){
+                  items: [Strings.SIDE_ONE_SIDED, Strings.SIDE_TWO_SIDED_PORTRAIT, Strings.SIDE_TWO_SIDED_LANDSCAPE].map((x){
                     return DropdownMenuItem<String>(
                       value: x,
                       child: Text(x),
@@ -155,7 +158,7 @@ class PrintPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 RaisedButton(
-                  onPressed: () => _appState.sendToPrinter(),
+                  onPressed: () => _appState.sendToPrinter(context),
                   color: Palette.PRIMARY_COLOR,
                   child: Text(
                     "Print",
