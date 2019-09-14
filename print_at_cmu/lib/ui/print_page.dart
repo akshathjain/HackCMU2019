@@ -18,8 +18,14 @@ class PrintPage extends StatelessWidget {
         title: Text("Print@CMU"),
       ),
       body: Container(
-        child: Center(
-          child: Text(appState.counter.toString()),
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                TextField(),
+              ],
+            )
+          ],
         ),
       ),
     );
