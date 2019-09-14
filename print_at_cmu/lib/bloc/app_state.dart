@@ -48,14 +48,11 @@ class AppState with ChangeNotifier{
   }
 
   void sendToPrinter() async{
-    print("hi");
     print(_andrewId);
     print(_numberCopies);
     print(_sidedness);
     print(_file);
     if(_andrewId != null && _numberCopies != null && _sidedness != null && _file != null){
-      print("here");
-
       String side;
 
       if(sidedness == "Two Sided (landscape)")
@@ -65,7 +62,7 @@ class AppState with ChangeNotifier{
       else
         side = "one-sided";
 
-      Network.sendFile(andrewId, numberCopies, side, _file);
+      Network.sendFile(andrewId, numberCopies, side, _file, fileName);
     }
   }
 
