@@ -9,6 +9,8 @@ import 'package:print_at_cmu/bloc/app_state.dart';
 import 'package:print_at_cmu/ui/print_page.dart';
 import 'package:provider/provider.dart';
 
+import 'ui/print_verification_panel.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -18,7 +20,9 @@ class MyApp extends StatelessWidget {
       title: 'Print@CMU',
       home: ChangeNotifierProvider<AppState>(
         builder: (_) => AppState(),
-        child: PrintPage(),
+        child: Material(
+          child: PrintVerificationPanel()
+        ),
       ),
     );
   }
