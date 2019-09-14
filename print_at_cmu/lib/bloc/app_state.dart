@@ -7,7 +7,9 @@ Purpose: stores app state
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:print_at_cmu/assets/strings.dart';
 import 'package:print_at_cmu/async/network.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -70,6 +72,23 @@ class AppState with ChangeNotifier{
       print(response);
       if(response["status_code"] == 200){
         _pc.open();
+      }else{
+        Flushbar(
+          messageText: Text(
+            response["message"],
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
+          animationDuration: Duration(milliseconds: 400),
+          duration: Duration(milliseconds: 3000),
+          flushbarStyle: FlushbarStyle.FLOATING,
+          borderRadius: 24.0,
+          margin: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 24.0),
+          boxShadows: [BoxShadow(
+            blurRadius: 14.0,
+            color: Color.fromRGBO(0,0,0,0.3),
+          )],
+        )..show(context);
       }
     }
   }
