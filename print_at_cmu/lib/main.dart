@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Print@CMU',
+      title: 'PrintStar',
       theme: ThemeData(
         primaryColor: Palette.PRIMARY_COLOR,
         accentColor: Palette.ACCENT_COLOR

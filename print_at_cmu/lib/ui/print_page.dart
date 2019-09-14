@@ -14,9 +14,11 @@ import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class PrintPage extends StatelessWidget {
+  AppState _appState;
+
   @override
   Widget build(BuildContext context) {
-    AppState appState = Provider.of<AppState>(context);
+    _appState = Provider.of<AppState>(context);
 
     return SlidingUpPanel(
       body: _body(),
@@ -29,7 +31,13 @@ class PrintPage extends StatelessWidget {
   Widget _body(){
     return Scaffold(
       appBar: AppBar(
-        title: Text("Print@CMU"),
+        title: Text(
+          "PrintStar",
+          style: TextStyle(
+            color: Colors.white,
+            //fontSize: 28
+          ),
+        ),
       ),
       body: Container(
         child: Column(
@@ -45,6 +53,7 @@ class PrintPage extends StatelessWidget {
                   labelText: Strings.ANDREW_ID_HINT,
                   icon: _icon(Icons.person_outline),
                 ),
+                onChanged: (String s) => _appState.andrewId = s
               ),
             ),
 
@@ -58,9 +67,10 @@ class PrintPage extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   hasFloatingPlaceholder: true,
-                  labelText: Strings.NUM_PAGES_HINT,
+                  labelText: Strings.NUM_COPIES_HINT,
                   icon: _icon(FontAwesomeIcons.file),
                 ),
+                onChanged: (String s) => _appState.numberCopies = int.parse(s),
               ),
             ),
 
@@ -77,8 +87,8 @@ class PrintPage extends StatelessWidget {
                 ),
 
                 DropdownButton<String>(
-                  value: "One Sided",
-                  onChanged: (String x) => {},
+                  value: _appState.sidedness,
+                  onChanged: (String x) => _appState.sidedness = x,
                   items: ["One Sided", "Two Sided (portrait)", "Two Sided (landscape)"].map((x){
                     return DropdownMenuItem<String>(
                       value: x,
@@ -90,7 +100,10 @@ class PrintPage extends StatelessWidget {
             ),
 
             _br(),
+            SizedBox(height: 6,),
 
+
+            //select file
             Row(
               children: <Widget>[
 
@@ -102,7 +115,7 @@ class PrintPage extends StatelessWidget {
 
                 InkWell(
                   borderRadius: BorderRadius.circular(12),
-                  onTap: (){},
+                  onTap: () => _appState.selectFile(),
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
                     decoration: BoxDecoration(
@@ -120,16 +133,29 @@ class PrintPage extends StatelessWidget {
                     ),
                   )
                 ),
+
+                SizedBox(width: 24,),
+
+                Expanded(
+                  child: Text(
+                    _appState.fileName,
+                    style: TextStyle(
+                      color: Colors.grey[700],
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ],
             ),
 
             _br(),
 
+            //print
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 RaisedButton(
-                  onPressed: (){},
+                  onPressed: () => _appState.sendToPrinter(),
                   color: Palette.PRIMARY_COLOR,
                   child: Text(
                     "Print",
@@ -141,7 +167,7 @@ class PrintPage extends StatelessWidget {
               ],
             ),
 
-            SizedBox(height: 100,),
+            SizedBox(height: 60,),
 
           ],
         ),
